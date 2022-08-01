@@ -1,25 +1,46 @@
-import Router from 'next/router';
-import Head from 'next/head';
-import NProgress from 'nprogress';
-import { ChakraProvider } from '@chakra-ui/react';
+import Router from "next/router";
+import Head from "next/head";
+import NProgress from "nprogress";
+import { ChakraProvider } from "@chakra-ui/react";
 
-import Layout from '../components/Layout';
+import Layout from "../components/Layout";
 
 function MyApp({ Component, pageProps }) {
   NProgress.configure({ showSpinner: false });
 
-  Router.events.on('routeChangeStart', () => {
+  Router.events.on("routeChangeStart", () => {
     NProgress.start();
   });
 
-  Router.events.on('routeChangeComplete', () => {
+  Router.events.on("routeChangeComplete", () => {
     NProgress.done();
   });
 
   return (
     <>
+      <script
+        strategy="lazyOnload"
+        src={`https://www.googletagmanager.com/gtag/js?id=G-4YW80G1YNF`}
+      />
+
+      <script strategy="lazyOnload">
+        {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+              page_path: window.location.pathname,
+            });
+                `}
+      </script>
       <Head>
-        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css' integrity='sha512-42kB9yDlYiCEfx2xVwq0q7hT4uf26FUgSIZBK8uiaEnTdShXjwr8Ip1V4xGJMg3mHkUt9nNuTDxunHF0/EgxLQ==' crossOrigin='anonymous' referrerPolicy='no-referrer' />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css"
+          integrity="sha512-42kB9yDlYiCEfx2xVwq0q7hT4uf26FUgSIZBK8uiaEnTdShXjwr8Ip1V4xGJMg3mHkUt9nNuTDxunHF0/EgxLQ=="
+          crossOrigin="anonymous"
+          referrerPolicy="no-referrer"
+        />
       </Head>
       <ChakraProvider>
         <Layout>
